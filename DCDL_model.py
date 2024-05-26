@@ -204,8 +204,8 @@ class DCDL(nn.Module):
         user_score_bound = predicted_x[users] @ self.user_bound
         return pred, user_score_bound, reg_loss, diff_loss, self.users_feature
 
-    def evaluate(self, propagate_result, users):
-        users_feature, bundles_feature, items_feature, diff_loss, predicted_x = propagate_result
-        users_feature = users_feature[users]
-        scores = users_feature @ (bundles_feature.T)
-        return scores
+    # def evaluate(self, propagate_result, users):
+    #     users_feature, bundles_feature, items_feature, diff_loss, predicted_x = propagate_result
+    #     users_feature = users_feature[users]
+    #     scores = users_feature @ (bundles_feature.T)
+    #     return scores
