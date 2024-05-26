@@ -137,7 +137,7 @@ class DCDL(nn.Module):
 
 
         self.timesteps = 15
-        self.denoise_model = DCDL.CFD_restore(emb_size, self.num_items, 30, 0.1, 'mlp1', device)
+        self.denoise = DCDL.CFD_restore(emb_size, self.num_items, 30, 0.1, 'mlp1', device)
         self.diffusion = DCDL.CFD_diffusion(self.timesteps, 0.0001, 0.02, 2.0)
         
         self.user_bound = nn.Parameter(
@@ -179,7 +179,7 @@ class DCDL(nn.Module):
         x_start = users_on_ub.squeeze(1)
         h = users_feature
         n = torch.randint(0, self.timesteps, (self.num_users,), device=self.device).long()
-        diff_loss, predicted_x = self.diffusion.p_losses(denoise_model=self.denoise_model, x_start=x_start, h=h, t=n,
+        diff_loss, predicted_x = self.diffusion.p_losses(denoise_model=self.denoise, x_start=x_start, h=h, t=n,
                                                          loss_type='l2')
 
         return users_feature, bundles_feature, items_feature, diff_loss, predicted_x
